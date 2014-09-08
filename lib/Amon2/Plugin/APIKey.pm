@@ -11,12 +11,13 @@ sub init {
     my ($class, $c, $config) = @_;
 
     Amon2::Util::add_method($c, 'api_key' => sub {
-        my ($c, %option) = @_;
+        my $c = shift;
         $c->{_api_key} ||= do {
-            my $mode = $c->mode_name || "development";
-            my $dbname = delete $option{dbname}
+            my $secret = $config->{secret} || "secret";
+            my $mode   = $c->mode_name || "development";
+            my $dbname = $config->{dbname}
                 || File::Spec->catfile($c->base_dir, "db", "api_key.$mode.db");
-            Amon2::Plugin::APIKey::Impl->new(dbname => $dbname, %option);
+            Amon2::Plugin::APIKey::Impl->new(dbname => $dbname, secret => $secret);
         };
     });
 
