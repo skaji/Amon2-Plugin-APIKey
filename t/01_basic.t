@@ -31,7 +31,7 @@ subtest basic2 => sub {
     is scalar(@key), 0;
 };
 
-subtest basic2 => sub {
+subtest basic3 => sub {
     my $tempdir = tempdir CLEANUP => 1;
     my $temp = "$tempdir/hoge.db";
     my $api_key = Amon2::Plugin::APIKey::Impl->new(dbname => $temp);
